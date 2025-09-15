@@ -1,0 +1,19 @@
+# Simple regex-to-CVE mapping used for inference when nmap output lacks CVE IDs.
+# Format: regex_pattern | CVE-YYYY-NNNN[,CVE-YYYY-NNNN]
+
+# Apache HTTP Server 2.4.49/2.4.50 Path Traversal
+apache\s+httpd\s+2\.4\.49 | CVE-2021-41773,CVE-2021-42013
+apache\s+httpd\s+2\.4\.50 | CVE-2021-42013
+
+# OpenSSH 7.2 roaming vulnerability
+openssh\s+7\.2 | CVE-2016-0777,CVE-2016-0778
+
+# vsftpd 2.3.4 backdoor (2011)
+vsftpd\s+2\.3\.4 | CVE-2011-2523
+
+# Samba SMB2 Negotiate Protocol crash (example older 3.5.x)
+samba\s+3\.5\.[0-5] | CVE-2010-2063
+
+# Apache Tomcat early 7.0 releases example
+apache\s+tomcat\s+7\.0\.[0-2] | CVE-2011-2526
+

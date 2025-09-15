@@ -1,0 +1,86 @@
+
+**File Path:** `/3_crew/nmap`
+
+---
+
+### 📌 Goal
+
+Create a **CrewAI-based Nmap solution** that can:
+
+1. Scan a target IP address
+2. Analyze the scan results
+3. Identify vulnerabilities and match them to known CVEs
+4. Generate a **Markdown report** with findings
+
+---
+
+### 🤖 CrewAI Agents
+
+1. **Security Manager Agent**
+
+   * Controls workflow and agent delegation.
+   * Decides whether to launch additional scans or terminate the workflow.
+   * Reads results from the **Nmap Results Agent**.
+   * Initially only supports Nmap, but must be extensible for other agents in future.
+
+2. **Nmap Scanner Agent**
+
+   * Given a target IP (and optionally previous scan results), chooses the appropriate Nmap scan syntax.
+   * Supports adaptive workflows (e.g., multiple scans depending on results).
+
+3. **Kali Linux Command Agent**
+
+   * Executes CLI commands on Kali Linux.
+   * First supported command: `nmap` (must be extensible to others).
+   * Smart retry handling and graceful failure when necessary.
+   * Returns structured output: `stdin`, `stdout`, `stderr`, and success/failure.
+
+4. **Nmap Results Agent**
+
+   * Parses and analyzes raw Nmap results.
+   * Identifies possible vulnerabilities and CVEs.
+   * Produces a Markdown report including:
+
+     * Summary of findings
+     * Detailed vulnerability analysis
+     * Raw Nmap output in a fenced `bash` code block
+
+---
+
+### ⚙️ Main Program (`main.py`)
+
+* Use `argparse` with two arguments:
+
+  * `target`: the target IP address
+  * `task`: task description (e.g., `"nmap scan target"`)
+
+* Workflow:
+
+  1. Security Manager Agent initiates the process.
+  2. Nmap Scanner Agent selects scan strategy.
+  3. Kali Linux Command Agent executes scan.
+  4. Nmap Results Agent analyzes results and generates report.
+
+---
+
+### 📄 Final Output
+
+* A **Markdown report** stored in `/reports/`
+* Filename must include a **timestamp** for uniqueness
+* CLI should confirm successful execution and print the path of the report
+
+---
+
+### ✅ Constraints
+
+* Must be modular and extensible for additional agents/commands.
+* Reports must always include: summary, analysis, and raw Nmap results.
+* Code should follow best practices for error handling and logging.
+
+---
+
+### 🎯 Expected Output
+
+* Functional CrewAI-based Nmap scanning workflow.
+* Single Markdown report generated per run, saved in `/reports`.
+* CLI confirmation message with success status and report path.

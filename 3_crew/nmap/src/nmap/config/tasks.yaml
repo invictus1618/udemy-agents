@@ -1,0 +1,22 @@
+results_analysis_task:
+  description: >
+    Analyze the provided Nmap results for the target {target} collected at {timestamp}.
+    You will receive the following inputs:
+
+    - open_services: parsed list of open services with port, protocol, service name,
+      and optional product/version strings
+    - cves_in_output: any CVEs explicitly mentioned by Nmap scripts
+    - matched_cves: CVEs inferred from service versions via local mapping rules
+    - raw_nmap_output: full text of the raw scan output
+
+    Your job:
+    - Summarize the key findings clearly in a concise, actionable way.
+    - Provide a detailed vulnerability analysis that explains risk and remediation.
+    - Be precise and do not invent CVEs—only use provided CVEs when making claims.
+  expected_output: >
+    A concise, professional Markdown section that includes:
+    - A short summary of the overall exposure
+    - Notable services and why they matter
+    - Vulnerabilities and CVEs from inputs with brief remediation tips
+    Avoid using fenced code blocks in this section.
+  agent: nmap_results_analyst
